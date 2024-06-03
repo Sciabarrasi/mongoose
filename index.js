@@ -1,9 +1,9 @@
 import { connect } from 'mongoose';
-import { Usuarios } from './models/usuario.js';
+import { Estudiantes } from './models/estudiante.js';
 
 async function connectMG() {
   try {
-    await connect('mongodb://127.0.0.1:27017/ecommerce', { useNewUrlParser: true });
+    await connect('mongodb://127.0.0.1:27017/colegio', { useNewUrlParser: true });
   } catch (e) {
     console.log(e);
     throw 'can not connect to the db';
@@ -13,43 +13,69 @@ async function connectMG() {
 console.log('conectanto...');
 await connectMG();
 console.log('conectado!!!');
-/* 
+/*
 //GUARDANDO UN USUARIO NUEVO
-console.log('GUARDANDO UN USUARIO NUEVO');
-const usuarioNuevo = new Usuarios({
-  name: 'ana',
-  usuario: 'ana',
-  email: 'guille@guille.com',
-  password: 123123123,
-});
+console.log('GUARDANDO UN ESTUDIANTE NUEVO');
+const estudianteNuevo = new Estudiantes(
+  { nombre: 'Daniel', apellido: 'Gallo', edad: 25, dni: '37923460', curso: '3B', nota: 2 },
 
-const usuarioGuardado = await usuarioNuevo.save();
+
+);
+
+const estudianteGuardado = await estudianteNuevo.save();
 //console.log(usuarioGuardado);
-
+*/
+/*
 //UPDATE A UN USUARIO EXISTENTE
-console.log('UPDATE A UN USUARIO EXISTENTE');
-const usuarioModificado = await Usuarios.updateOne(
-  { name: 'guille' },
+console.log('UPDATE A UN ESTUDIANTE EXISTENTE');
+const estudianteModificado = await Estudiantes.updateMany(
+  { curso: '1A' },
   {
     $set: {
-      email: 'modificado@gmail.com',
+      ingreso: true,
     },
   }
 );
-//console.log(usuarioModificado);
-
+console.log(estudianteModificado);
+*/
+/*
 //LEER TODOS LOS USUARIOS
-//console.log('LEER TODOS LOS USUARIOS');
-const usuarios = await Usuarios.find({});
-//console.log(usuarios);
+console.log('LEER TODOS LOS ESTUDIANTES');
+const estudiantes = await Estudiantes.find();
 
+console.log(estudiantes);
+*/
+
+//LEER TODOS LOS USUARIOS + FECHA DE CREACION
+const estudiantes = await Estudiantes.find({}, {__v: false});
+const estudiantesConFecha = [];
+
+for (const estudiante of estudiantes){
+  estudiantesConFecha.push({
+  _id: estudiante._id.toString(),
+  nombre: estudiante.nombre,
+  apellido: estudiante.apellido,
+  edad: estudiante.edad,
+  dni: estudiante.dni,
+  curso: estudiante.curso,
+  nota: estudiante.nota,
+  ingreso: estudiante.ingreso,
+  fechaCreacion: estudiante._id.getTimestamp()
+  })
+}
+
+console.log({ estudiantesConFecha})
+//console.log(listarEstudiantes);
+
+/*
 //LEER ALGUNOS USUARIOS
-console.log('LEER USUARIOS');
-const algunosUsuarios = await Usuarios.find({}).sort({ name: 1 }).limit(2).skip(25);
-//console.log(algunosUsuarios);
-
+console.log('LEER ESTUDIANTES');
+const algunosEstudiantes = await Estudiantes.find({}).sort({ name: 1 }).limit(2).skip(25);
+console.log(algunosEstudiantes);
+*/
+/*
 //BORRAR UN USUARIO EXISTENTE
-console.log('BORRAR UN USUARIO EXISTENTE');
-const usuarioBorrar = await Usuarios.deleteOne({ name: 'guille' });
-//console.log(usuarioBorrar);
- */
+console.log('BORRAR UN ESTUDIANTE EXISTENTE');
+const estudianteBorrar = await Estudiantes.deleteMany({ ingreso: true });
+console.log(estudianteBorrar);
+*/
