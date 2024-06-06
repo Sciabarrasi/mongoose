@@ -3,7 +3,7 @@ import { Estudiantes } from './models/estudiante.js';
 
 async function connectMG() {
   try {
-    await connect('mongodb://127.0.0.1:27017/colegio', { useNewUrlParser: true });
+    await connect('mongodb+srv://gian:BzPA9zRWmz2Yq7J1@cluster0.iczeyxe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', { useNewUrlParser: true });
   } catch (e) {
     console.log(e);
     throw 'can not connect to the db';
@@ -38,14 +38,8 @@ const estudianteModificado = await Estudiantes.updateMany(
 );
 console.log(estudianteModificado);
 */
+
 /*
-//LEER TODOS LOS USUARIOS
-console.log('LEER TODOS LOS ESTUDIANTES');
-const estudiantes = await Estudiantes.find();
-
-console.log(estudiantes);
-*/
-
 //LEER TODOS LOS USUARIOS + FECHA DE CREACION
 const estudiantes = await Estudiantes.find({}, {__v: false});
 const estudiantesConFecha = [];
@@ -66,6 +60,7 @@ for (const estudiante of estudiantes){
 
 console.log({ estudiantesConFecha})
 //console.log(listarEstudiantes);
+*/ 
 
 /*
 //LEER ALGUNOS USUARIOS
@@ -79,3 +74,10 @@ console.log('BORRAR UN ESTUDIANTE EXISTENTE');
 const estudianteBorrar = await Estudiantes.deleteMany({ ingreso: true });
 console.log(estudianteBorrar);
 */
+
+
+//LEER TODOS LOS USUARIOS
+console.log('LEER TODOS LOS ESTUDIANTES');
+const estudiantes = await Estudiantes.find();
+
+console.log(estudiantes);
